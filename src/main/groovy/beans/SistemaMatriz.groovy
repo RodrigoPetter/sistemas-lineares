@@ -3,8 +3,8 @@ package beans
 import groovy.transform.Canonical
 
 @Canonical
-class variable {
+class SistemaMatriz {
 
-    def prefix
-    def currentValue
+    List<Function> functions
+
 }

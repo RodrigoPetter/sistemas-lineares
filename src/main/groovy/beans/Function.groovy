@@ -3,8 +3,8 @@ package beans
 import groovy.transform.Canonical
 
 @Canonical
-class function {
+class Function {
 
-    List<variable> variables
+    List<Variable> variables
 
 }
