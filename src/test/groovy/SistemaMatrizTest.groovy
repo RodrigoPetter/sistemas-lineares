@@ -3,7 +3,7 @@ import spock.lang.Specification
 
 class SistemaMatrizTest extends Specification {
 
-    def "deve criar uma matriz quadrada"() {
+    def "o construtor deve criar uma matriz quadrada"() {
         setup:
         def matriz = new SistemaMatriz(5)
 
