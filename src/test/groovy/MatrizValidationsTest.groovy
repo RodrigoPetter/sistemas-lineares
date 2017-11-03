@@ -1,39 +1,34 @@
 import beans.SistemaMatriz
+import helper.MatrizHelper
 import spock.lang.Specification
 import validations.MatrizValidations
 
 class MatrizValidationsTest extends Specification {
 
-    private MatrizValidations matrizValidations
+    private MatrizValidations matrizValidations = new MatrizValidations()
+    private MatrizHelper matrizHelper = new MatrizHelper()
+
     private SistemaMatriz matriz
 
-    def setup() {
-        matrizValidations = new MatrizValidations()
-        matriz = new SistemaMatriz(5)
-    }
-
     def "valida se matriz é quadrada"() {
-        expect:
-        matrizValidations.isQuadrada(matriz) == true
-    }
-
-    def "valida se as linhas são linearmente independentes"() {
         setup:
-        //alimentar a matriz
+        matriz = new SistemaMatriz(5)
 
         expect:
-        matrizValidations.isLinearmenteIndependente(matriz) == true
+        matrizValidations.isQuadrada(matriz)
     }
 
-    def "valida se a diagonal principal possui os maiores valores absolutos"() {
-        setup:
-        //alimentar a matriz
+    def "valida se é diagonalmente dominante"() {
+        when:
+        matriz = matrizHelper.getValidMatriz()
 
-        expect:
-        matrizValidations.isDiagonalPrincipalAbsoluta(matriz) == true
-    }
+        then:
+        matrizValidations.isDiagonalmenteDominante(matriz)
 
-    private void AlimentarMatriz(){
+        when:
+        matriz = matrizHelper.getInvalidMatriz()
 
+        then:
+        !matrizValidations.isDiagonalmenteDominante(matriz)
     }
 }

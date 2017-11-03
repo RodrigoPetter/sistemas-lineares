@@ -15,4 +15,8 @@ class SistemaMatriz {
         }
     }
 
+    def getValueAt(int linha, int coluna){
+        return functions.get(linha).variables.get(coluna).value
+    }
+
 }
