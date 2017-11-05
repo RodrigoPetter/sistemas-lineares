@@ -11,6 +11,8 @@ class MatrizValidations {
         return matriz.functions.size() == matriz.functions.get(0).variables.size()
     }
 
+    //Critério das linhas
+    //Para GAUSS-JACOBI se verdadeiro, o método converge independente do ponto inicial
     boolean isDiagonalmenteDominante(SistemaMatriz matriz) {
         def totalLinhas = matriz.functions.size()
         def principal = matrizHelper.getDiagonalPrincipal(matriz)
