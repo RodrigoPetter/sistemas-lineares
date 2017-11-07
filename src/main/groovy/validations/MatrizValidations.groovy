@@ -19,7 +19,7 @@ class MatrizValidations {
         def triangular = matrizHelper.getTriangulares(matriz)
 
         for (int i = 0; i < totalLinhas; i++) {
-            if(principal.functions.get(i).somaModular() <= triangular.functions.get(i).somaModular()){
+            if (principal.functions.get(i).somaModular() <= triangular.functions.get(i).somaModular()) {
                 return false
             }
         }
