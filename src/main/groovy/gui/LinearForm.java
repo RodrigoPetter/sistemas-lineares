@@ -8,6 +8,7 @@ import validations.MatrizValidations;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.RoundingMode;
 
 public class LinearForm {
     private JPanel panelForm;
@@ -28,6 +29,8 @@ public class LinearForm {
     private JScrollPane jscrollpaneJacobi;
     private JScrollPane scroll1;
     private JLabel label1;
+    private JTextField guiPrecisao;
+    private JComboBox guiArredondamento;
 
     private SistemaMatriz sistemaMatriz;
     private MatrizHelper matrizHelper = new MatrizHelper();
@@ -39,6 +42,10 @@ public class LinearForm {
     private Jacobi jacobi;
 
     public LinearForm() {
+
+        guiArredondamento.setModel(new DefaultComboBoxModel(RoundingMode.values()));
+        guiArredondamento.setSelectedIndex(4);
+
         buttonGerar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -74,7 +81,11 @@ public class LinearForm {
         n1Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                jacobi.getNextSolucao();
+
+                Integer precisao = Integer.parseInt(guiPrecisao.getText());
+                RoundingMode roundingMode = RoundingMode.valueOf(guiArredondamento.getSelectedIndex());
+
+                jacobi.getNextSolucao(precisao, roundingMode);
                 jacobiTableModel.fireTableDataChanged();
             }
         });

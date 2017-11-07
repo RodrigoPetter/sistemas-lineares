@@ -5,6 +5,6 @@ import groovy.transform.Canonical
 @Canonical
 class Variable {
 
-    def value = 0
+    Integer value = 0
 
 }

@@ -81,7 +81,7 @@ class MatrizHelper {
 
         matriz.functions.get(1).variables.get(0).value = 3
         matriz.functions.get(1).variables.get(1).value = -9
-        matriz.functions.get(1).variables.get(2).value = 2
+        matriz.functions.get(1).variables.get(2).value = 3
         matriz.functions.get(1).result = -6
 
         matriz.functions.get(2).variables.get(0).value = 4

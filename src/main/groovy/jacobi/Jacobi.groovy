@@ -2,6 +2,8 @@ package jacobi
 
 import beans.SistemaMatriz
 
+import java.math.RoundingMode
+
 class Jacobi {
 
     private SistemaMatriz sistemaMatriz
@@ -19,24 +21,25 @@ class Jacobi {
         solucoes.add(solucaoInicial)
     }
 
-    List<BigDecimal> getNextSolucao() {
-        List<BigDecimal> novaSolucao = new ArrayList<>()
+    List<BigDecimal> getNextSolucao(Integer precisao, RoundingMode roundingMode) {
 
+        List<BigDecimal> novaSolucao = new ArrayList<>()
         Integer ultimaInteracaoIndex = solucoes.size() - 1
 
         sistemaMatriz.functions.eachWithIndex { funcao, indexF ->
 
-            def soma = funcao.result
+            BigDecimal calc = new BigDecimal(funcao.result)
+            calc = calc.setScale(precisao, roundingMode)
 
             funcao.variables.eachWithIndex { variavel, indexV ->
                 if (indexF != indexV) {
-                    soma += (-variavel.value) * solucoes.get(ultimaInteracaoIndex).get(indexV)
+                    calc = calc.add(solucoes.get(ultimaInteracaoIndex).get(indexV).multiply((-variavel.value)))
                 }
             }
 
-            def resultado = soma / sistemaMatriz.getValueAt(indexF, indexF)
+            calc = calc.divide(sistemaMatriz.getValueAt(indexF, indexF), precisao, roundingMode)
 
-            novaSolucao.add(resultado)
+            novaSolucao.add(calc)
         }
 
         solucoes.add(novaSolucao)

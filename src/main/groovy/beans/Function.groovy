@@ -6,7 +6,7 @@ import groovy.transform.Canonical
 class Function {
 
     List<Variable> variables = new ArrayList<Variable>()
-    def result = 0
+    Integer result = 0
 
     Function(Integer quantidadeVariaveis) {
 

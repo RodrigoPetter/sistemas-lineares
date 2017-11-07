@@ -49,6 +49,6 @@ class MatrizTableModel extends AbstractTableModel{
 
     @Override
     void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        dados.setValueAt(aValue, rowIndex, columnIndex)
+        dados.setValueAt(Integer.parseInt(aValue), rowIndex, columnIndex)
     }
 }
