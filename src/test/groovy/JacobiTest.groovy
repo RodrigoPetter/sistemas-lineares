@@ -34,6 +34,12 @@ class JacobiTest extends Specification {
         interecao1.get(0) == 2.6
         interecao1.get(1) == 0.6666666667
         interecao1.get(2) == 2.1666666667
+
+        and: "Deve retornar a interação 2 com os valores corretos"
+        def interecao2 = jacobi.getNextSolucao()
+        //interecao2.get(0) == 1.60004
+        interecao2.get(1) == 2.255533333
+        interecao2.get(2) == 3.199983333
     }
 
 }

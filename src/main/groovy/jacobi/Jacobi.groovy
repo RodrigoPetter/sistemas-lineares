@@ -30,7 +30,7 @@ class Jacobi {
 
             funcao.variables.eachWithIndex { variavel, indexV ->
                 if (indexF != indexV) {
-                    soma += (-variavel.value) * solucoes.get(ultimaInteracaoIndex).get(indexF)
+                    soma += (-variavel.value) * solucoes.get(ultimaInteracaoIndex).get(indexV)
                 }
             }
 
