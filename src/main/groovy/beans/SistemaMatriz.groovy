@@ -15,8 +15,20 @@ class SistemaMatriz {
         }
     }
 
-    def getValueAt(int linha, int coluna){
-        return functions.get(linha).variables.get(coluna).value
+    def getValueAt(int linha, int coluna) {
+        if (coluna == functions.get(linha).variables.size()) {
+            return functions.get(linha).result
+        } else {
+            return functions.get(linha).variables.get(coluna).value
+        }
+    }
+
+    void setValueAt(def value, int linha, int coluna) {
+        if (coluna == functions.get(linha).variables.size()) {
+            functions.get(linha).result = value
+        } else {
+            functions.get(linha).variables.get(coluna).value = value
+        }
     }
 
 }
