@@ -2,6 +2,8 @@ import helper.MatrizHelper
 import jacobi.Jacobi
 import spock.lang.Specification
 
+import java.math.RoundingMode
+
 class JacobiTest extends Specification {
 
     private MatrizHelper matrizHelper = new MatrizHelper()
@@ -28,7 +30,7 @@ class JacobiTest extends Specification {
         Jacobi jacobi = new Jacobi(matriz)
 
         when:
-        def interecao1 = jacobi.getNextSolucao()
+        def interecao1 = jacobi.getNextSolucao(10, RoundingMode.HALF_UP)
 
         then:
         interecao1.get(0) == 2.6
@@ -36,10 +38,10 @@ class JacobiTest extends Specification {
         interecao1.get(2) == 2.1666666667
 
         and: "Deve retornar a interação 2 com os valores corretos"
-        def interecao2 = jacobi.getNextSolucao()
-        //interecao2.get(0) == 1.60004
-        interecao2.get(1) == 2.255533333
-        interecao2.get(2) == 3.199983333
+        def interecao2 = jacobi.getNextSolucao(10, RoundingMode.HALF_UP)
+        interecao2.get(0) == 1.6000000000
+        interecao2.get(1) == 2.2555555556
+        interecao2.get(2) == 3.2000000000
     }
 
 }
