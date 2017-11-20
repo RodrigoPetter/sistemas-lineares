@@ -1,15 +1,15 @@
-package jacobi
+package sidel
 
 import beans.SistemaMatriz
 
 import java.math.RoundingMode
 
-class Jacobi {
+class Seidel {
 
     private SistemaMatriz sistemaMatriz
     List<List<BigDecimal>> solucoes = new ArrayList<>()
 
-    Jacobi(SistemaMatriz sistemaMatriz) {
+    Seidel(SistemaMatriz sistemaMatriz) {
         this.sistemaMatriz = sistemaMatriz
 
         List<BigDecimal> solucaoInicial = new ArrayList<>()
@@ -32,9 +32,11 @@ class Jacobi {
             calc = calc.setScale(precisao, roundingMode)
 
             funcao.variables.eachWithIndex { variavel, indexV ->
-                if (indexF != indexV) {
-                    def multiplicador = solucoes.get(ultimaInteracaoIndex).get(indexV)
-                    calc = calc.add(multiplicador.multiply((-variavel.value)))
+                if (indexV > indexF) {
+                    calc = calc.add(solucoes.get(ultimaInteracaoIndex).get(indexV).multiply((-variavel.value)))
+                }
+                if (indexV < indexF) {
+                    calc = calc.add(novaSolucao.get(indexV).multiply((-variavel.value)))
                 }
             }
 

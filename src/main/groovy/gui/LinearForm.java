@@ -3,6 +3,7 @@ package gui;
 import beans.SistemaMatriz;
 import helper.MatrizHelper;
 import jacobi.Jacobi;
+import sidel.Seidel;
 import validations.MatrizValidations;
 
 import javax.swing.*;
@@ -36,10 +37,12 @@ public class LinearForm {
     private MatrizHelper matrizHelper = new MatrizHelper();
     private MatrizTableModel matrizTableModel;
     private SolucoesTableModel jacobiTableModel;
+    private SolucoesTableModel seidelTableModel;
 
     private MatrizValidations matrizValidations = new MatrizValidations();
 
     private Jacobi jacobi;
+    private Seidel seidel;
 
     public LinearForm() {
 
@@ -70,6 +73,7 @@ public class LinearForm {
                 guiTable.setModel(matrizTableModel);
 
                 ininiarJacobi(sistemaMatriz);
+                ininiarSeidel(sistemaMatriz);
             }
         });
         buttonValidar.addActionListener(new ActionListener() {
@@ -87,6 +91,9 @@ public class LinearForm {
 
                 jacobi.getNextSolucao(precisao, roundingMode);
                 jacobiTableModel.fireTableDataChanged();
+
+                seidel.getNextSolucao(precisao, roundingMode);
+                seidelTableModel.fireTableDataChanged();
             }
         });
     }
@@ -103,5 +110,11 @@ public class LinearForm {
         jacobi = new Jacobi(sistemaMatriz);
         jacobiTableModel = new SolucoesTableModel(jacobi.getSolucoes());
         resultados_jacobi.setModel(jacobiTableModel);
+    }
+
+    private void ininiarSeidel(SistemaMatriz sistemaMatriz) {
+        seidel = new Seidel(sistemaMatriz);
+        seidelTableModel = new SolucoesTableModel(seidel.getSolucoes());
+        resultados_seidel.setModel(seidelTableModel);
     }
 }
