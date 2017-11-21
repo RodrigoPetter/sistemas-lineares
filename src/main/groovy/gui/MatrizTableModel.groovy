@@ -44,11 +44,15 @@ class MatrizTableModel extends AbstractTableModel{
 
     @Override
     boolean isCellEditable(int rowIndex, int columnIndex) {
-        return true
+        return columnIndex < getColumnCount()-1
     }
 
     @Override
     void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         dados.setValueAt(Integer.parseInt(aValue), rowIndex, columnIndex)
+    }
+
+    SistemaMatriz getDados() {
+        return dados
     }
 }

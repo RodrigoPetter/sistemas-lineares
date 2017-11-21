@@ -16,7 +16,7 @@ class Function {
 
     }
 
-    def somaModular(){
+    def somaModular() {
 
         def soma = 0
 
@@ -27,4 +27,14 @@ class Function {
         return soma
     }
 
+    def calcularResultado(ResultadosEsperados resultadosEsperados) {
+        def calc = 0
+        resultadosEsperados.resultadosEsperados.eachWithIndex { Variable variavel, int index ->
+            calc += this.variables.get(index).value.multiply(variavel.value)
+        }
+
+        this.result = calc
+
+        return calc
+    }
 }

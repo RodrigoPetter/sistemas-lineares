@@ -1,5 +1,6 @@
 package gui;
 
+import beans.ResultadosEsperados;
 import beans.SistemaMatriz;
 import helper.MatrizHelper;
 import jacobi.Jacobi;
@@ -7,6 +8,8 @@ import sidel.Seidel;
 import validations.MatrizValidations;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.RoundingMode;
@@ -32,17 +35,21 @@ public class LinearForm {
     private JLabel label1;
     private JTextField guiPrecisao;
     private JComboBox guiArredondamento;
+    private JPanel panel_esperados;
+    private JTable esperadosTable;
 
     private SistemaMatriz sistemaMatriz;
     private MatrizHelper matrizHelper = new MatrizHelper();
     private MatrizTableModel matrizTableModel;
     private SolucoesTableModel jacobiTableModel;
     private SolucoesTableModel seidelTableModel;
+    private EsperadosTableModel esperadoTableModel;
 
     private MatrizValidations matrizValidations = new MatrizValidations();
 
     private Jacobi jacobi;
     private Seidel seidel;
+    private ResultadosEsperados resultadosEsperados;
 
     public LinearForm() {
 
@@ -72,8 +79,10 @@ public class LinearForm {
                 matrizTableModel = new MatrizTableModel(sistemaMatriz);
                 guiTable.setModel(matrizTableModel);
 
-                ininiarJacobi(sistemaMatriz);
-                ininiarSeidel(sistemaMatriz);
+                iniciarJacobi(sistemaMatriz);
+                iniciarSeidel(sistemaMatriz);
+                iniciarEsperados(nroVariaveis);
+
             }
         });
         buttonValidar.addActionListener(new ActionListener() {
@@ -106,15 +115,21 @@ public class LinearForm {
         frame.setVisible(true);
     }
 
-    private void ininiarJacobi(SistemaMatriz sistemaMatriz) {
+    private void iniciarJacobi(SistemaMatriz sistemaMatriz) {
         jacobi = new Jacobi(sistemaMatriz);
         jacobiTableModel = new SolucoesTableModel(jacobi.getSolucoes());
         resultados_jacobi.setModel(jacobiTableModel);
     }
 
-    private void ininiarSeidel(SistemaMatriz sistemaMatriz) {
+    private void iniciarSeidel(SistemaMatriz sistemaMatriz) {
         seidel = new Seidel(sistemaMatriz);
         seidelTableModel = new SolucoesTableModel(seidel.getSolucoes());
         resultados_seidel.setModel(seidelTableModel);
+    }
+
+    private void iniciarEsperados(Integer nroVariaveis){
+        resultadosEsperados = new ResultadosEsperados(nroVariaveis);
+        esperadoTableModel = new EsperadosTableModel(resultadosEsperados, matrizTableModel);
+        esperadosTable.setModel(esperadoTableModel);
     }
 }

@@ -31,4 +31,10 @@ class SistemaMatriz {
         }
     }
 
+    void recalcularResultados(ResultadosEsperados resultadosEsperados){
+        functions.each {
+            it -> it.calcularResultado(resultadosEsperados)
+        }
+    }
+
 }
