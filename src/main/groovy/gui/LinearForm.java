@@ -82,9 +82,9 @@ public class LinearForm {
                 matrizTableModel = new MatrizTableModel(sistemaMatriz);
                 guiTable.setModel(matrizTableModel);
 
+                iniciarEsperados(nroVariaveis);
                 iniciarJacobi(sistemaMatriz);
                 iniciarSeidel(sistemaMatriz);
-                iniciarEsperados(nroVariaveis);
 
             }
         });

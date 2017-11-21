@@ -4,6 +4,7 @@ import beans.ResultadosEsperados
 import helper.VariableNames
 
 import javax.swing.table.AbstractTableModel
+import java.math.RoundingMode
 
 class ErrosTableModel extends AbstractTableModel {
 
@@ -57,38 +58,44 @@ class ErrosTableModel extends AbstractTableModel {
             }
         } else {
 
-            def indexVariavel = columnIndex-1
+            def indexVariavel = columnIndex - 1
 
             switch (rowIndex) {
                 case 0:
                     return variacao(indexVariavel)
                     break
                 case 1:
-                    return "Erro absoluto:"
+                    return erroAbsoluto(indexVariavel)
                     break
                 case 2:
-                    return "Erro relativo:"
+                    return erroRelativo(indexVariavel)
                     break
             }
         }
     }
 
-    private BigDecimal variacao(int indexVariavel){
-        if(solucoes.size() == 1) {
+    private BigDecimal variacao(int indexVariavel) {
+        if (solucoes.size() == 1) {
             return solucoes.get(0).get(indexVariavel)
         }
 
-        int rowIndex = solucoes.size()-1
+        int rowIndex = solucoes.size() - 1
 
-        return solucoes.get(rowIndex).get(indexVariavel).minus(solucoes.get(rowIndex-1).get(indexVariavel)).abs()
+        return solucoes.get(rowIndex).get(indexVariavel).minus(solucoes.get(rowIndex - 1).get(indexVariavel)).abs()
     }
 
-    private BigDecimal erroAbsoluto(){
-
+    private BigDecimal erroAbsoluto(int indexVariavel) {
+        int rowIndex = solucoes.size() - 1
+        return resultadosEsperados.resultadosEsperados.get(indexVariavel).value.minus(solucoes.get(rowIndex).get(indexVariavel)).abs()
     }
 
-    private BigDecimal erroRelativo(){
-
+    private BigDecimal erroRelativo(int indexVariavel) {
+        int rowIndex = solucoes.size() - 1
+        BigDecimal erroAbsoluto = this.erroAbsoluto(indexVariavel)
+        def valorCorreto = solucoes.get(rowIndex).get(indexVariavel)
+        return (valorCorreto == 0) ?
+                0 :
+                erroAbsoluto.divide(valorCorreto, 4, RoundingMode.HALF_UP).abs()
     }
 
 }
