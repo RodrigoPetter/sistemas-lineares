@@ -78,7 +78,7 @@
         </constraints>
         <properties/>
         <border type="line" title="Sistema de funções ">
-          <color color="-4473925"/>
+          <color color="-16777216"/>
         </border>
         <children>
           <scrollpane id="89616" binding="scroll1">
@@ -108,7 +108,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="3bb3" binding="panel_jacobi" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="3bb3" binding="panel_jacobi" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -120,12 +120,29 @@
             <children>
               <scrollpane id="ff129" binding="jscrollpaneJacobi">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="-1" height="180"/>
+                  </grid>
                 </constraints>
                 <properties/>
                 <border type="none"/>
                 <children>
                   <component id="5ef96" class="javax.swing.JTable" binding="resultados_jacobi">
+                    <constraints/>
+                    <properties/>
+                  </component>
+                </children>
+              </scrollpane>
+              <scrollpane id="5a846">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="-1" height="40"/>
+                  </grid>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="37845" class="javax.swing.JTable" binding="jacobi_variacao">
                     <constraints/>
                     <properties/>
                   </component>
@@ -145,7 +162,9 @@
             <children>
               <scrollpane id="7366a">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="-1" height="180"/>
+                  </grid>
                 </constraints>
                 <properties/>
                 <border type="none"/>
@@ -220,7 +239,9 @@
       <grid id="bfdaf" binding="panel_esperados" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="-1" height="63"/>
+          </grid>
         </constraints>
         <properties/>
         <border type="line" title="Resultados esperados"/>

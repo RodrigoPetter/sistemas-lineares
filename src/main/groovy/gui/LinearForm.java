@@ -37,6 +37,7 @@ public class LinearForm {
     private JComboBox guiArredondamento;
     private JPanel panel_esperados;
     private JTable esperadosTable;
+    private JTable jacobi_variacao;
 
     private SistemaMatriz sistemaMatriz;
     private MatrizHelper matrizHelper = new MatrizHelper();
