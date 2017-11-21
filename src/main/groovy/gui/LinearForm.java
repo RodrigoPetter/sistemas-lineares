@@ -8,8 +8,6 @@ import sidel.Seidel;
 import validations.MatrizValidations;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.RoundingMode;
@@ -37,14 +35,18 @@ public class LinearForm {
     private JComboBox guiArredondamento;
     private JPanel panel_esperados;
     private JTable esperadosTable;
-    private JTable jacobi_variacao;
+    private JTable jacobi_erros;
+    private JTable seidel_erros;
 
     private SistemaMatriz sistemaMatriz;
     private MatrizHelper matrizHelper = new MatrizHelper();
     private MatrizTableModel matrizTableModel;
+    private EsperadosTableModel esperadoTableModel;
     private SolucoesTableModel jacobiTableModel;
     private SolucoesTableModel seidelTableModel;
-    private EsperadosTableModel esperadoTableModel;
+    private ErrosTableModel jacobiErrosTM;
+    private ErrosTableModel seidelErrosTM;
+
 
     private MatrizValidations matrizValidations = new MatrizValidations();
 
@@ -104,6 +106,9 @@ public class LinearForm {
 
                 seidel.getNextSolucao(precisao, roundingMode);
                 seidelTableModel.fireTableDataChanged();
+
+                jacobiErrosTM.fireTableDataChanged();
+                seidelErrosTM.fireTableDataChanged();
             }
         });
     }
@@ -120,12 +125,18 @@ public class LinearForm {
         jacobi = new Jacobi(sistemaMatriz);
         jacobiTableModel = new SolucoesTableModel(jacobi.getSolucoes());
         resultados_jacobi.setModel(jacobiTableModel);
+
+        jacobiErrosTM = new ErrosTableModel(jacobi.getSolucoes(), resultadosEsperados);
+        jacobi_erros.setModel(jacobiErrosTM);
     }
 
     private void iniciarSeidel(SistemaMatriz sistemaMatriz) {
         seidel = new Seidel(sistemaMatriz);
         seidelTableModel = new SolucoesTableModel(seidel.getSolucoes());
         resultados_seidel.setModel(seidelTableModel);
+
+        seidelErrosTM = new ErrosTableModel(seidel.getSolucoes(), resultadosEsperados);
+        seidel_erros.setModel(seidelErrosTM);
     }
 
     private void iniciarEsperados(Integer nroVariaveis){
