@@ -50,7 +50,7 @@ class EsperadosTableModel extends AbstractTableModel{
 
     @Override
     void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        dados.resultadosEsperados.get(columnIndex).value = Integer.parseInt(aValue)
+        dados.resultadosEsperados.get(columnIndex).value = Float.parseFloat(aValue)
         matrizTableModel.getDados().recalcularResultados(dados)
         matrizTableModel.fireTableDataChanged()
     }

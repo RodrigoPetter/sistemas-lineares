@@ -5,12 +5,12 @@ import groovy.transform.Canonical
 @Canonical
 class Variable {
 
-    Integer value = 0
+    Float value = 0
 
     Variable() {
     }
 
-    Variable(Integer value) {
+    Variable(Float value) {
         this.value = value
     }
 }
