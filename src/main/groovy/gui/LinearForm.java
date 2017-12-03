@@ -25,7 +25,6 @@ public class LinearForm {
     private JPanel panel_jacobi;
     private JPanel btn_resultados;
     private JButton n1Button;
-    private JButton resultadoFinalButton;
     private JTable resultados_jacobi;
     private JTable resultados_seidel;
     private JScrollPane jscrollpaneJacobi;
@@ -37,6 +36,7 @@ public class LinearForm {
     private JTable esperadosTable;
     private JTable jacobi_erros;
     private JTable seidel_erros;
+    private JButton buscarResultadoButton;
 
     private SistemaMatriz sistemaMatriz;
     private MatrizHelper matrizHelper = new MatrizHelper();
@@ -91,8 +91,26 @@ public class LinearForm {
         buttonValidar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //matrizValidations.allValidations(sistemaMatriz);
+                if (!matrizValidations.isQuadrada(sistemaMatriz)) {
+                    JOptionPane.showMessageDialog(null, "A matriz não é quadrada!");
+                }
+
+                if (!matrizValidations.isDiagonalmenteDominante(sistemaMatriz)) {
+                    int resposta = JOptionPane.showConfirmDialog(null, "A matriz não atenden o critério das linhas (diagonalmente dominante). Deseja aplicar o Pivotamento de Gauss?", "Diagonalmente Dominante", JOptionPane.YES_NO_OPTION);
+
+                    if (resposta == 0) {
+
+                        matrizHelper.pivotamento(sistemaMatriz);
+                        if (!matrizValidations.isDiagonalmenteDominante(sistemaMatriz)) {
+                            JOptionPane.showMessageDialog(null, "Nenhuma combinação passou no critério de linhas.");
+                        }
+
+                        matrizTableModel.fireTableDataChanged();
+                    }
+
+                }
             }
+
         });
         n1Button.addActionListener(new ActionListener() {
             @Override
@@ -139,7 +157,7 @@ public class LinearForm {
         seidel_erros.setModel(seidelErrosTM);
     }
 
-    private void iniciarEsperados(Integer nroVariaveis){
+    private void iniciarEsperados(Integer nroVariaveis) {
         resultadosEsperados = new ResultadosEsperados(nroVariaveis);
         esperadoTableModel = new EsperadosTableModel(resultadosEsperados, matrizTableModel);
         esperadosTable.setModel(esperadoTableModel);

@@ -1,6 +1,8 @@
 package helper
 
+import beans.Function
 import beans.SistemaMatriz
+import validations.MatrizValidations
 
 class MatrizHelper {
 
@@ -31,6 +33,41 @@ class MatrizHelper {
         }
 
         return matrizTriangular
+    }
+
+    SistemaMatriz pivotamento(SistemaMatriz entrada) {
+        int tamanho = entrada.functions.size()
+        Function[] funcOrder = new Function[tamanho]
+
+        for (int linha = 0; linha < tamanho ; linha++) {
+            int maxPivo = maxPivo(entrada.functions.get(linha))
+            if(funcOrder[maxPivo] == null) {
+                funcOrder[maxPivo] = entrada.functions.get(linha)
+            }else{
+                return null
+            }
+        }
+
+        println funcOrder
+
+        entrada.functions.clear()
+        for (int linha = 0; linha < tamanho ; linha++) {
+            entrada.functions.add(funcOrder[linha])
+        }
+
+        return entrada
+    }
+
+    Integer maxPivo(Function funcao){
+        int maxColuna = 0
+        int maxValue = 0
+        for (int coluna = 0; coluna < funcao.variables.size() ; coluna++) {
+            if(funcao.variables.get(coluna).value.abs() > maxValue){
+                maxValue = funcao.variables.get(coluna).value.abs()
+                maxColuna = coluna
+            }
+        }
+        return maxColuna
     }
 
     SistemaMatriz getNewMatrizWithRandomValues(Integer quantidadeVariaveis) {
@@ -79,15 +116,15 @@ class MatrizHelper {
         matriz.functions.get(0).variables.get(2).value = 4
         matriz.functions.get(0).result = 26
 
-        matriz.functions.get(1).variables.get(0).value = 3
-        matriz.functions.get(1).variables.get(1).value = -9
-        matriz.functions.get(1).variables.get(2).value = 3
-        matriz.functions.get(1).result = -6
+        matriz.functions.get(2).variables.get(0).value = 3
+        matriz.functions.get(2).variables.get(1).value = -9
+        matriz.functions.get(2).variables.get(2).value = 3
+        matriz.functions.get(2).result = -6
 
-        matriz.functions.get(2).variables.get(0).value = 4
-        matriz.functions.get(2).variables.get(1).value = 3
-        matriz.functions.get(2).variables.get(2).value = -12
-        matriz.functions.get(2).result = -26
+        matriz.functions.get(1).variables.get(0).value = 4
+        matriz.functions.get(1).variables.get(1).value = 3
+        matriz.functions.get(1).variables.get(2).value = -12
+        matriz.functions.get(1).result = -26
 
         return matriz
     }
