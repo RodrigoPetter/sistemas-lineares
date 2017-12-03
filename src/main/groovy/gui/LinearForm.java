@@ -10,7 +10,9 @@ import validations.MatrizValidations;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 public class LinearForm {
     private JPanel panelForm;
@@ -37,6 +39,8 @@ public class LinearForm {
     private JTable jacobi_erros;
     private JTable seidel_erros;
     private JButton buscarResultadoButton;
+    private JComboBox parada;
+    private JTextField paradaValue;
 
     private SistemaMatriz sistemaMatriz;
     private MatrizHelper matrizHelper = new MatrizHelper();
@@ -116,19 +120,69 @@ public class LinearForm {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                Integer precisao = Integer.parseInt(guiPrecisao.getText());
-                RoundingMode roundingMode = RoundingMode.valueOf(guiArredondamento.getSelectedIndex());
+                nextSolucao();
 
-                jacobi.getNextSolucao(precisao, roundingMode);
-                jacobiTableModel.fireTableDataChanged();
-
-                seidel.getNextSolucao(precisao, roundingMode);
-                seidelTableModel.fireTableDataChanged();
-
-                jacobiErrosTM.fireTableDataChanged();
-                seidelErrosTM.fireTableDataChanged();
             }
         });
+        buscarResultadoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                BigDecimal stop = new BigDecimal(paradaValue.getText());
+                int interarJacobi = 1;
+                int interarSeidel = 1;
+
+                while (interarJacobi == 1 || interarSeidel == 1) {
+                    if(interarJacobi==1){
+                        nextJacobi();
+                    }
+                    if(interarSeidel==1){
+                        nextSeidel();
+                    }
+                    switch (parada.getSelectedIndex()) {
+
+                        case 0:
+                            interarJacobi = jacobiErrosTM.getMinVariacao().compareTo(stop);
+                            interarSeidel = seidelErrosTM.getMinVariacao().compareTo(stop);
+                            break;
+
+                        case 1:
+                            interarJacobi = jacobiErrosTM.getMinErroAbsoluto().compareTo(stop);
+                            interarSeidel = seidelErrosTM.getMinErroAbsoluto().compareTo(stop);
+                            break;
+
+                        case 2:
+                            interarJacobi = jacobiErrosTM.getMinErroRelativo().compareTo(stop);
+                            interarSeidel = seidelErrosTM.getMinErroRelativo().compareTo(stop);
+                            break;
+                    }
+                }
+            }
+        });
+    }
+
+    private void nextSolucao() {
+        nextJacobi();
+        nextSeidel();
+    }
+
+    private void nextJacobi() {
+        Integer precisao = Integer.parseInt(guiPrecisao.getText());
+        RoundingMode roundingMode = RoundingMode.valueOf(guiArredondamento.getSelectedIndex());
+
+        jacobi.getNextSolucao(precisao, roundingMode);
+        jacobiTableModel.fireTableDataChanged();
+
+        jacobiErrosTM.fireTableDataChanged();
+    }
+
+    private void nextSeidel() {
+        Integer precisao = Integer.parseInt(guiPrecisao.getText());
+        RoundingMode roundingMode = RoundingMode.valueOf(guiArredondamento.getSelectedIndex());
+
+        seidel.getNextSolucao(precisao, roundingMode);
+        seidelTableModel.fireTableDataChanged();
+
+        seidelErrosTM.fireTableDataChanged();
     }
 
     public static void main(String[] args) {
