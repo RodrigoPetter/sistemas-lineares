@@ -97,6 +97,7 @@ public class LinearForm {
             public void actionPerformed(ActionEvent e) {
                 if (!matrizValidations.isQuadrada(sistemaMatriz)) {
                     JOptionPane.showMessageDialog(null, "A matriz não é quadrada!");
+                    return;
                 }
 
                 if (!matrizValidations.isDiagonalmenteDominante(sistemaMatriz)) {
@@ -107,12 +108,15 @@ public class LinearForm {
                         matrizHelper.pivotamento(sistemaMatriz);
                         if (!matrizValidations.isDiagonalmenteDominante(sistemaMatriz)) {
                             JOptionPane.showMessageDialog(null, "Nenhuma combinação passou no critério de linhas.");
+                            return;
                         }
 
                         matrizTableModel.fireTableDataChanged();
                     }
 
                 }
+
+                JOptionPane.showMessageDialog(null, "A matriz passou em todas as validações! (Quadrada e diagonalmente dominante)");
             }
 
         });
