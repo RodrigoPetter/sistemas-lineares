@@ -44,7 +44,8 @@ class MatrizTableModel extends AbstractTableModel{
 
     @Override
     boolean isCellEditable(int rowIndex, int columnIndex) {
-        return columnIndex < getColumnCount()-1
+        //return columnIndex < getColumnCount()-1 //desativa edição da coluna dos resultados
+        return true
     }
 
     @Override
