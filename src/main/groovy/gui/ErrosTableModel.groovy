@@ -98,27 +98,27 @@ class ErrosTableModel extends AbstractTableModel {
                 erroAbsoluto.divide(valorCorreto, 4, RoundingMode.HALF_UP).abs()
     }
 
-    private BigDecimal getMinValue(int rowIndex){
-        def minValue = 999999
+    private BigDecimal getMaxValue(int rowIndex){
+        def maxValue = 0
 
         for (int i = 1; i < colunas.size(); i++) {
-            if (getValueAt(rowIndex, i) < minValue) {
-                minValue = getValueAt(rowIndex, i)
+            if (getValueAt(rowIndex, i) > maxValue) {
+                maxValue = getValueAt(rowIndex, i)
             }
         }
 
-        return minValue
+        return maxValue
     }
 
-    BigDecimal getMinVariacao() {
-        return getMinValue(0)
+    BigDecimal getMaxVariacao() {
+        return getMaxValue(0)
     }
 
-    BigDecimal getMinErroAbsoluto() {
-        return getMinValue(1)
+    BigDecimal getMaxErroAbsoluto() {
+        return getMaxValue(1)
     }
 
-    BigDecimal getMinErroRelativo() {
-        return getMinValue(2)
+    BigDecimal getMaxErroRelativo() {
+        return getMaxValue(2)
     }
 }

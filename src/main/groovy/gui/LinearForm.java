@@ -12,7 +12,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 
 public class LinearForm {
     private JPanel panelForm;
@@ -41,6 +40,8 @@ public class LinearForm {
     private JButton buscarResultadoButton;
     private JComboBox parada;
     private JTextField paradaValue;
+    private JButton zerarResultadosButton;
+    private JTextField max_interacoes;
 
     private SistemaMatriz sistemaMatriz;
     private MatrizHelper matrizHelper = new MatrizHelper();
@@ -132,10 +133,13 @@ public class LinearForm {
             @Override
             public void actionPerformed(ActionEvent e) {
                 BigDecimal stop = new BigDecimal(paradaValue.getText());
+                int maxInteracoes = Integer.parseInt(max_interacoes.getText());
                 int interarJacobi = 1;
                 int interarSeidel = 1;
 
-                while (interarJacobi == 1 || interarSeidel == 1) {
+                while (maxInteracoes > 0 && (interarJacobi == 1 || interarSeidel == 1)) {
+                    maxInteracoes--;
+
                     if(interarJacobi==1){
                         nextJacobi();
                     }
@@ -145,21 +149,28 @@ public class LinearForm {
                     switch (parada.getSelectedIndex()) {
 
                         case 0:
-                            interarJacobi = jacobiErrosTM.getMinVariacao().compareTo(stop);
-                            interarSeidel = seidelErrosTM.getMinVariacao().compareTo(stop);
+                            interarJacobi = jacobiErrosTM.getMaxVariacao().compareTo(stop);
+                            interarSeidel = seidelErrosTM.getMaxVariacao().compareTo(stop);
                             break;
 
                         case 1:
-                            interarJacobi = jacobiErrosTM.getMinErroAbsoluto().compareTo(stop);
-                            interarSeidel = seidelErrosTM.getMinErroAbsoluto().compareTo(stop);
+                            interarJacobi = jacobiErrosTM.getMaxErroAbsoluto().compareTo(stop);
+                            interarSeidel = seidelErrosTM.getMaxErroAbsoluto().compareTo(stop);
                             break;
 
                         case 2:
-                            interarJacobi = jacobiErrosTM.getMinErroRelativo().compareTo(stop);
-                            interarSeidel = seidelErrosTM.getMinErroRelativo().compareTo(stop);
+                            interarJacobi = jacobiErrosTM.getMaxErroRelativo().compareTo(stop);
+                            interarSeidel = seidelErrosTM.getMaxErroRelativo().compareTo(stop);
                             break;
                     }
                 }
+            }
+        });
+        zerarResultadosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                iniciarJacobi(sistemaMatriz);
+                iniciarSeidel(sistemaMatriz);
             }
         });
     }
