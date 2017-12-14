@@ -23,27 +23,27 @@ class Jacobi {
 
     List<BigDecimal> getNextSolucao(Integer precisao, RoundingMode roundingMode) {
 
-        List<BigDecimal> novaSolucao = new ArrayList<>()
-        Integer ultimaInteracaoIndex = solucoes.size() - 1
+        List<BigDecimal> novaSolucao = new ArrayList<>()                                  //1
+        Integer ultimaInteracaoIndex = solucoes.size() - 1                                //1
 
-        sistemaMatriz.functions.eachWithIndex { funcao, indexF ->
+        sistemaMatriz.functions.eachWithIndex { funcao, indexF ->                         //N
 
-            BigDecimal calc = new BigDecimal(funcao.result)
-            calc = calc.setScale(precisao, roundingMode)
+            BigDecimal calc = new BigDecimal(funcao.result)                               //->1
+            calc = calc.setScale(precisao, roundingMode)                                  //->1
 
-            funcao.variables.eachWithIndex { variavel, indexV ->
-                if (indexF != indexV) {
-                    def multiplicador = solucoes.get(ultimaInteracaoIndex).get(indexV)
-                    calc = calc.add(multiplicador.multiply((-variavel.value)))
+            funcao.variables.eachWithIndex { variavel, indexV ->                          //->N
+                if (indexF != indexV) {                                                   //-->1
+                    def multiplicador = solucoes.get(ultimaInteracaoIndex).get(indexV)    //-->1
+                    calc = calc.add(multiplicador.multiply((-variavel.value)))            //-->1
                 }
             }
 
-            calc = calc.divide(sistemaMatriz.getValueAt(indexF, indexF), precisao, roundingMode)
+            calc = calc.divide(sistemaMatriz.getValueAt(indexF, indexF), precisao, roundingMode) //->1
 
-            novaSolucao.add(calc)
+            novaSolucao.add(calc)                                                                //->1
         }
 
-        solucoes.add(novaSolucao)
-        return novaSolucao
+        solucoes.add(novaSolucao)                                                               //1
+        return novaSolucao                                                                      //1
     }
 }
