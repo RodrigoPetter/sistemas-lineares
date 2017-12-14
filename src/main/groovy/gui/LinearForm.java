@@ -106,7 +106,7 @@ public class LinearForm {
                 }
 
                 if (!matrizValidations.isDiagonalmenteDominante(sistemaMatriz)) {
-                    int resposta = JOptionPane.showConfirmDialog(null, "A matriz não atenden o critério das linhas (diagonalmente dominante). Deseja aplicar o Pivotamento de Gauss?", "Diagonalmente Dominante", JOptionPane.YES_NO_OPTION);
+                    int resposta = JOptionPane.showConfirmDialog(null, "A matriz não atende o critério das linhas (diagonalmente dominante). Deseja aplicar o Pivotamento de Gauss?", "Diagonalmente Dominante", JOptionPane.YES_NO_OPTION);
 
                     if (resposta == 0) {
 

@@ -23,7 +23,7 @@ class SistemaMatriz {
         }
     }
 
-    void setValueAt(Integer value, int linha, int coluna) {
+    void setValueAt(Float value, int linha, int coluna) {
         if (coluna == functions.get(linha).variables.size()) {
             functions.get(linha).result = value
         } else {
